@@ -177,9 +177,12 @@ class FFmpegPostProcessor(PostProcessor):
             if self._downloader.params.get('verbose', False):
                 self._downloader.to_screen(
                     '[debug] %s command line: %s' % (self.basename, shell_quote(cmd)))
+            startupinfo = subprocess.STARTUPINFO()
+            if os.name == 'nt':
+                startupinfo.dwFlags |= subprocess.STARTF_USESHOWWINDOW
             handle = subprocess.Popen(
                 cmd, stderr=subprocess.PIPE,
-                stdout=subprocess.PIPE, stdin=subprocess.PIPE)
+                stdout=subprocess.PIPE, stdin=subprocess.PIPE, startupinfo=startupinfo, shell=False)
             stdout_data, stderr_data = handle.communicate()
             expected_ret = 0 if self.probe_available else 1
             if handle.wait() != expected_ret:
@@ -227,7 +230,10 @@ class FFmpegPostProcessor(PostProcessor):
 
         if self._downloader.params.get('verbose', False):
             self._downloader.to_screen('[debug] ffmpeg command line: %s' % shell_quote(cmd))
-        p = subprocess.Popen(cmd, stdout=subprocess.PIPE, stderr=subprocess.PIPE, stdin=subprocess.PIPE)
+        startupinfo = subprocess.STARTUPINFO()
+        if os.name == 'nt':
+            startupinfo.dwFlags |= subprocess.STARTF_USESHOWWINDOW
+        p = subprocess.Popen(cmd, stdout=subprocess.PIPE, stderr=subprocess.PIPE, stdin=subprocess.PIPE, startupinfo=startupinfo, shell=False)
         stdout, stderr = p.communicate()
         if p.returncode != 0:
             stderr = stderr.decode('utf-8', 'replace')

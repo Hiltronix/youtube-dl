@@ -383,10 +383,15 @@ class YoutubeDL(object):
                     width_args = []
                 else:
                     width_args = ['-w', str(width)]
+                startupinfo = subprocess.STARTUPINFO()
+                if os.name == 'nt':
+                    startupinfo.dwFlags |= subprocess.STARTF_USESHOWWINDOW
                 sp_kwargs = dict(
                     stdin=subprocess.PIPE,
                     stdout=slave,
-                    stderr=self._err_file)
+                    stderr=self._err_file,
+                    startupinfo=startupinfo,
+                    shell=False)
                 try:
                     self._output_process = subprocess.Popen(
                         ['bidiv'] + width_args, **sp_kwargs
@@ -2270,9 +2275,12 @@ class YoutubeDL(object):
         if _LAZY_LOADER:
             self._write_string('[debug] Lazy loading extractors enabled' + '\n')
         try:
+            startupinfo = subprocess.STARTUPINFO()
+            if os.name == 'nt':
+                startupinfo.dwFlags |= subprocess.STARTF_USESHOWWINDOW
             sp = subprocess.Popen(
                 ['git', 'rev-parse', '--short', 'HEAD'],
-                stdout=subprocess.PIPE, stderr=subprocess.PIPE,
+                stdout=subprocess.PIPE, stderr=subprocess.PIPE, startupinfo=startupinfo, shell=False,
                 cwd=os.path.dirname(os.path.abspath(__file__)))
             out, err = sp.communicate()
             out = out.decode().strip()

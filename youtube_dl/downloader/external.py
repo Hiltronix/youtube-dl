@@ -102,8 +102,11 @@ class ExternalFD(FileDownloader):
 
         self._debug_cmd(cmd)
 
+        startupinfo = subprocess.STARTUPINFO()
+        if os.name == 'nt':
+            startupinfo.dwFlags |= subprocess.STARTF_USESHOWWINDOW
         p = subprocess.Popen(
-            cmd, stderr=subprocess.PIPE)
+            cmd, stderr=subprocess.PIPE, startupinfo=startupinfo, shell=False)
         _, stderr = p.communicate()
         if p.returncode != 0:
             self.to_stderr(stderr.decode('utf-8', 'replace'))
@@ -333,7 +336,10 @@ class FFmpegFD(ExternalFD):
 
         self._debug_cmd(args)
 
-        proc = subprocess.Popen(args, stdin=subprocess.PIPE, env=env)
+        startupinfo = subprocess.STARTUPINFO()
+        if os.name == 'nt':
+            startupinfo.dwFlags |= subprocess.STARTF_USESHOWWINDOW
+        proc = subprocess.Popen(args, stdin=subprocess.PIPE, env=env, startupinfo=startupinfo, shell=False)
         try:
             retval = proc.wait()
         except KeyboardInterrupt:
