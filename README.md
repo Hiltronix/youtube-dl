@@ -1,3 +1,7 @@
+# ABOUT THIS FORK
+
+The point of me forking this project, was to hide the MS Windows console windows whenever "subprocess.Popen" is called.
+
 [![Build Status](https://travis-ci.org/ytdl-org/youtube-dl.svg?branch=master)](https://travis-ci.org/ytdl-org/youtube-dl)
 
 youtube-dl - download videos from youtube.com or other video platforms
