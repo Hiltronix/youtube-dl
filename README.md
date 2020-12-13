@@ -2,7 +2,6 @@
 
 The point of me forking this project, was to hide the MS Windows console windows whenever "subprocess.Popen" is called.  Which is important in the Windows based Python projects I create, that use this library.
 
-[![Build Status](https://travis-ci.org/ytdl-org/youtube-dl.svg?branch=master)](https://travis-ci.org/ytdl-org/youtube-dl)
 =======
 [![Build Status](https://travis-ci.com/ytdl-org/youtube-dl.svg?branch=master)](https://travis-ci.com/ytdl-org/youtube-dl)
 
