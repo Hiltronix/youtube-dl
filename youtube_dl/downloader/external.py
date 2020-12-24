@@ -102,8 +102,9 @@ class ExternalFD(FileDownloader):
 
         self._debug_cmd(cmd)
 
-        startupinfo = subprocess.STARTUPINFO()
+        startupinfo = None
         if os.name == 'nt':
+            startupinfo = subprocess.STARTUPINFO()
             startupinfo.dwFlags |= subprocess.STARTF_USESHOWWINDOW
         p = subprocess.Popen(
             cmd, stderr=subprocess.PIPE, startupinfo=startupinfo, shell=False)
@@ -336,8 +337,9 @@ class FFmpegFD(ExternalFD):
 
         self._debug_cmd(args)
 
-        startupinfo = subprocess.STARTUPINFO()
+        startupinfo = None
         if os.name == 'nt':
+            startupinfo = subprocess.STARTUPINFO()
             startupinfo.dwFlags |= subprocess.STARTF_USESHOWWINDOW
         proc = subprocess.Popen(args, stdin=subprocess.PIPE, env=env, startupinfo=startupinfo, shell=False)
         try:

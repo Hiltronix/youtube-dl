@@ -177,8 +177,9 @@ class FFmpegPostProcessor(PostProcessor):
             if self._downloader.params.get('verbose', False):
                 self._downloader.to_screen(
                     '[debug] %s command line: %s' % (self.basename, shell_quote(cmd)))
-            startupinfo = subprocess.STARTUPINFO()
+            startupinfo = None
             if os.name == 'nt':
+                startupinfo = subprocess.STARTUPINFO()
                 startupinfo.dwFlags |= subprocess.STARTF_USESHOWWINDOW
             handle = subprocess.Popen(
                 cmd, stderr=subprocess.PIPE,
@@ -230,8 +231,9 @@ class FFmpegPostProcessor(PostProcessor):
 
         if self._downloader.params.get('verbose', False):
             self._downloader.to_screen('[debug] ffmpeg command line: %s' % shell_quote(cmd))
-        startupinfo = subprocess.STARTUPINFO()
+        startupinfo = None
         if os.name == 'nt':
+            startupinfo = subprocess.STARTUPINFO()
             startupinfo.dwFlags |= subprocess.STARTF_USESHOWWINDOW
         p = subprocess.Popen(cmd, stdout=subprocess.PIPE, stderr=subprocess.PIPE, stdin=subprocess.PIPE, startupinfo=startupinfo, shell=False)
         stdout, stderr = p.communicate()

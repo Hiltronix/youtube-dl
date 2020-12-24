@@ -3720,8 +3720,9 @@ def check_executable(exe, args=[]):
     """ Checks if the given binary is installed somewhere in PATH, and returns its name.
     args can be a list of arguments for a short output (like -version) """
     try:
-        startupinfo = subprocess.STARTUPINFO()
+        startupinfo = None
         if os.name == 'nt':
+            startupinfo = subprocess.STARTUPINFO()
             startupinfo.dwFlags |= subprocess.STARTF_USESHOWWINDOW
         subprocess.Popen([exe] + args, stdout=subprocess.PIPE, stderr=subprocess.PIPE, startupinfo=startupinfo, shell=False).communicate()
     except OSError:
@@ -3737,8 +3738,9 @@ def get_exe_version(exe, args=['--version'],
         # STDIN should be redirected too. On UNIX-like systems, ffmpeg triggers
         # SIGTTOU if youtube-dl is run in the background.
         # See https://github.com/ytdl-org/youtube-dl/issues/955#issuecomment-209789656
-        startupinfo = subprocess.STARTUPINFO()
+        startupinfo = None
         if os.name == 'nt':
+            startupinfo = subprocess.STARTUPINFO()
             startupinfo.dwFlags |= subprocess.STARTF_USESHOWWINDOW
         out, _ = subprocess.Popen(
             [encodeArgument(exe)] + args,
@@ -5678,8 +5680,9 @@ def write_xattr(path, key, value):
                        + [encodeFilename(path, True)])
 
                 try:
-                    startupinfo = subprocess.STARTUPINFO()
+                    startupinfo = None
                     if os.name == 'nt':
+                        startupinfo = subprocess.STARTUPINFO()
                         startupinfo.dwFlags |= subprocess.STARTF_USESHOWWINDOW
                     p = subprocess.Popen(
                         cmd, stdout=subprocess.PIPE, stderr=subprocess.PIPE, stdin=subprocess.PIPE, startupinfo=startupinfo, shell=False)
