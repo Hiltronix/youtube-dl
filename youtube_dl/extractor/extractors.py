@@ -1260,6 +1260,7 @@ from .tv2 import (
     TV2IE,
     TV2ArticleIE,
     KatsomoIE,
+    MTVUutisetArticleIE,
 )
 from .tv2dk import (
     TV2DKIE,
@@ -1458,6 +1459,7 @@ from .vrv import (
     VRVSeriesIE,
 )
 from .vshare import VShareIE
+from .vtm import VTMIE
 from .medialaan import MedialaanIE
 from .vube import VubeIE
 from .vuclip import VuClipIE
